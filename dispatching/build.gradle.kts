@@ -6,10 +6,10 @@ plugins {
 }
 
 application {
-    mainClass.set("sk.stuba.fei.asos.grpc.DispatchingAppKt")
+    mainClass.set("sk.stuba.fei.asos.project24.dispatching.DispatchingAppKt")
 }
 
-group = "sk.stuba.fei"
+group = "sk.stuba.fei.asos.project24"
 
 repositories {
     mavenCentral()

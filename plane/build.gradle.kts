@@ -6,10 +6,10 @@ plugins {
 }
 
 application {
-    mainClass.set("sk.stuba.fei.asos.grpc.PlaneAppKt")
+    mainClass.set("sk.stuba.fei.asos.project24.plane.PlaneAppKt")
 }
 
-group = "sk.stuba.fei"
+group = "sk.stuba.fei.asos.project24"
 
 repositories {
     mavenCentral()
