@@ -11,3 +11,4 @@ val grpcKotlinVersion by extra { "1.3.0" }
 val coroutinesVersion by extra { "1.6.4" }
 val logbackVersion by extra { "1.4.4" }
 val kotlinLogVersion by extra { "2.0.11" }
+val ktorVersion by extra { "2.1.3" }
