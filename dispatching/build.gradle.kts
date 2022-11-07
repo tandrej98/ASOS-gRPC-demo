@@ -9,7 +9,7 @@ application {
     mainClass.set("sk.stuba.fei.asos.project24.dispatching.DispatchingAppKt")
 }
 
-group = "sk.stuba.fei.asos.project24"
+group = rootProject.group
 
 repositories {
     mavenCentral()

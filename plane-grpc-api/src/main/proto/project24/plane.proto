@@ -18,10 +18,11 @@ message Location {
 
 message PlaneInfo {
   string id = 1;
-  int32 capacity = 2;
+  Type type = 2;
   string name = 3;
-  string start_city = 4;
-  string end_city = 5;
+  int32 capacity = 4;
+  string start_city = 5;
+  string end_city = 6;
 }
 
 message LocationRequest {
@@ -29,6 +30,14 @@ message LocationRequest {
 }
 
 message PlaneInfoRequest {
+
+}
+
+enum Type {
+  TYPE_UNSPECIFIED = 0;
+  AIRLINER = 1;
+  CARGO_PLANE = 2;
+  PRIVATE_PLANE = 3;
 
 }
 
