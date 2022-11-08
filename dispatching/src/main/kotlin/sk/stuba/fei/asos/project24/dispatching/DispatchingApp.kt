@@ -1,5 +1,12 @@
 package sk.stuba.fei.asos.project24.dispatching
 
-fun main() {
-    println("TODO")
+import io.ktor.server.application.*
+import sk.stuba.fei.asos.project24.dispatching.plugins.configureRouting
+import sk.stuba.fei.asos.project24.dispatching.plugins.configureSerialization
+
+fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
+
+fun Application.module() {
+    configureSerialization()
+    configureRouting()
 }
