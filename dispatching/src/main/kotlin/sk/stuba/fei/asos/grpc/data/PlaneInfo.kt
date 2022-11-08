@@ -3,7 +3,7 @@ package sk.stuba.fei.asos.grpc.data
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PlainInfo(
+data class PlaneInfo(
     private val id: Long,
     private val type: String,
     private val name: String,
@@ -19,5 +19,9 @@ data class PlainInfo(
 
     fun setLongitude(longitude: Double) {
         this.longitude += longitude
+    }
+
+    fun getId(): Long{
+        return this.id
     }
 }
