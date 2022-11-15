@@ -1,0 +1,13 @@
+FROM gradle:7.4.2-jdk8 as builder
+USER root
+RUN mkdir /dispatching
+WORKDIR /dispatching
+COPY . .
+RUN gradle :dispatching:clean :dispatching:shadowJar
+RUN mv dispatching/build/libs/dispatching-all.jar dispatching.jar
+
+FROM openjdk:8-jre-alpine
+USER root
+WORKDIR /dispatching
+COPY --from=builder ./dispatching/dispatching.jar dispatching.jar
+CMD ["java", "-jar", "dispatching.jar"]

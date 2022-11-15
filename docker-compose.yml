@@ -1,1 +1,36 @@
-TODO:
+version: "3"
+
+services:
+  dispatching:
+    build:
+      context: ./
+      dockerfile: ./dispatching/src/main/docker/dockerfile
+    ports:
+      - "8081:8080"
+
+  plane-1:
+    build:
+      context: ./
+      dockerfile: ./plane/src/main/docker/dockerfile
+    image: plane
+    environment:
+      - PLANE_ID=1
+      - PLANE_TYPE=AIRLINER
+      - PLANE_NAME="Boeing 747"
+      - PLANE_CAPACITY=524
+      - PLANE_START="Paris"
+      - PLANE_DESTINATION="London"
+    ports:
+      - "8082:8080"
+
+  plane-2:
+    image: plane
+    environment:
+      - PLANE_ID=2
+      - PLANE_TYPE=AIRLINER
+      - PLANE_NAME="Airbus A320"
+      - PLANE_CAPACITY=200
+      - PLANE_START="Prague"
+      - PLANE_DESTINATION="Barcelona"
+    ports:
+      - "8083:8080"
