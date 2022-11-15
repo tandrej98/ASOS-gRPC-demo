@@ -4,6 +4,7 @@ plugins {
     id("application")
     kotlin("jvm")
     kotlin("plugin.serialization") version "1.4.32"
+    id ("com.github.johnrengelman.shadow")
 }
 
 application {

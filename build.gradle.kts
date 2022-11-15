@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "1.7.20" apply false
     id("com.google.protobuf") version "0.9.1" apply false
+    id ("com.github.johnrengelman.shadow") version "7.1.2" apply false
 }
 
 group = rootProject.group
