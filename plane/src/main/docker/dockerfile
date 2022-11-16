@@ -1,0 +1,13 @@
+FROM gradle:7.4.2-jdk8 as builder
+USER root
+RUN mkdir /plane
+WORKDIR /plane
+COPY . .
+RUN gradle :plane:clean :plane:shadowJar
+RUN mv plane/build/libs/plane-all.jar plane.jar
+
+FROM openjdk:11-jre-slim-buster
+USER root
+WORKDIR /plane
+COPY --from=builder ./plane/plane.jar plane.jar
+CMD ["java", "-jar", "plane.jar"]

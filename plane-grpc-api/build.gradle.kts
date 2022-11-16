@@ -3,6 +3,7 @@ import com.google.protobuf.gradle.id
 plugins {
     kotlin("jvm")
     id("com.google.protobuf")
+    id ("com.github.johnrengelman.shadow")
 }
 
 group = rootProject.group
