@@ -8,6 +8,7 @@ service Plane {
   rpc FollowLocation(LocationRequest) returns (stream Location);
   rpc CurrentLocation(LocationRequest) returns (Location);
   rpc Information(PlaneInfoRequest) returns (PlaneInfo);
+  rpc Register(RegisterRequest) returns (RegisterResponse);
 }
 
 message Location {
@@ -17,12 +18,20 @@ message Location {
 }
 
 message PlaneInfo {
-  string id = 1;
+  int64 id = 1;
   Type type = 2;
   string name = 3;
   int32 capacity = 4;
   string start_city = 5;
   string end_city = 6;
+}
+
+message RegisterResponse {
+  int64 id = 1;
+}
+
+message RegisterRequest {
+
 }
 
 message LocationRequest {

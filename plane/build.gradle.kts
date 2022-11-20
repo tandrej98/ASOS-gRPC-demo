@@ -24,12 +24,14 @@ repositories {
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
 
-    implementation(project(":plane-grpc-api"))
     implementation(kotlin("stdlib-jdk8"))
+    //  gRPC
+    implementation(project(":plane-grpc-api"))
     implementation("io.grpc:grpc-netty:$grpcVersion")
     implementation("io.grpc:grpc-stub:$grpcVersion")
     implementation("io.grpc:grpc-kotlin-stub:$grpcKotlinVersion")
     implementation("io.grpc:grpc-protobuf:$grpcVersion")
+//    Logging
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("io.github.microutils:kotlin-logging-jvm:$kotlinLogVersion")
 }
