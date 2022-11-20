@@ -4,7 +4,7 @@ import sk.stuba.fei.asos.project24.plane.EnvKeys
 import sk.stuba.fei.asos.project24.plane.Type
 
 object PlaneData {
-    val id: String = System.getenv(EnvKeys.PLANE_ID_KEY)
+    val id: Long = System.getenv(EnvKeys.PLANE_ID_KEY)?.toLong()
         ?: throw IllegalArgumentException("Plane ID cannot be empty")
     val type: Type = Type.valueOf(System.getenv(EnvKeys.PLANE_TYPE_KEY))
     val name: String = System.getenv(EnvKeys.PLANE_NAME_KEY)

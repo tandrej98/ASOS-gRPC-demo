@@ -13,6 +13,11 @@ application {
 
 group = rootProject.group
 val ktorVersion: String by rootProject.extra
+val grpcVersion: String by rootProject.extra
+val grpcKotlinVersion: String by rootProject.extra
+val coroutinesVersion: String by rootProject.extra
+val logbackVersion: String by rootProject.extra
+val kotlinLogVersion: String by rootProject.extra
 
 repositories {
     mavenCentral()
@@ -27,6 +32,16 @@ dependencies {
     implementation("io.ktor:ktor-server-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+//    gRPC
+    implementation(project(":plane-grpc-api"))
+    implementation("io.grpc:grpc-netty:$grpcVersion")
+    implementation("io.grpc:grpc-stub:$grpcVersion")
+    implementation("io.grpc:grpc-kotlin-stub:$grpcKotlinVersion")
+    implementation("io.grpc:grpc-protobuf:$grpcVersion")
+//    logging
+    implementation("ch.qos.logback:logback-classic:$logbackVersion")
+    implementation("io.github.microutils:kotlin-logging-jvm:$kotlinLogVersion")
 }
 
 val compileKotlin: KotlinCompile by tasks

@@ -1,5 +1,7 @@
 package sk.stuba.fei.asos.project24.plane.grpc
 
+import io.grpc.Status
+import io.grpc.StatusRuntimeException
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.flow
 import mu.KotlinLogging
@@ -15,28 +17,31 @@ class PlaneService(
 ): PlaneGrpcKt.PlaneCoroutineImplBase(coroutineContext) {
     private val log = KotlinLogging.logger {}
     private val locationIterator = PlaneLocation.locations.iterator()
-    private lateinit var currentLocation: Location
+    private var _currentLocation: Location? = null
+    private val currentLocation: Location
+        get() = _currentLocation ?: throw StatusRuntimeException(Status.INTERNAL)
 
     init {
         log.info("Starting plane service of plane ID: {}", PlaneData.id)
         if (!locationIterator.hasNext()) throw IllegalArgumentException("Locations list is empty")
-    }
-
-//    Location updates only while the dispatching is following the plane. Not Ideal
-//    but Ok considering the scope of this demo.
-    override fun followLocation(request: LocationRequest) = flow {
-        while (context.isActive) {
-            if (locationIterator.hasNext()) {
-                currentLocation = locationIterator.next()
+//      A race condition between this thread and the emitting coroutine can occur
+//       but this solution is enough for this demonstration
+        Dispatchers.Default.dispatch(context) {
+            while (true) {
+                if (locationIterator.hasNext()) {
+                    _currentLocation = locationIterator.next()
+                }
+                Thread.sleep(Config.delaySeconds * 1000)
             }
-            emit(currentLocation)
-            delay(Config.delaySeconds.seconds)
         }
     }
 
-    override suspend fun currentLocation(request: LocationRequest): Location {
-        return currentLocation
+    override fun followLocation(request: LocationRequest) = flow {
+        emit(currentLocation)
+        delay(Config.delaySeconds.seconds)
     }
+
+    override suspend fun currentLocation(request: LocationRequest) = currentLocation
 
     override suspend fun information(request: PlaneInfoRequest): PlaneInfo {
         return PlaneInfo.newBuilder()
@@ -47,5 +52,9 @@ class PlaneService(
             .setStartCity(PlaneData.start)
             .setEndCity(PlaneData.destination)
             .build()
+    }
+
+    override suspend fun register(request: RegisterRequest): RegisterResponse {
+        return RegisterResponse.newBuilder().setId(PlaneData.id).build()
     }
 }
