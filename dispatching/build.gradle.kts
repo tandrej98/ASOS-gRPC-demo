@@ -48,3 +48,8 @@ val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions {
     jvmTarget = "1.8"
 }
+
+//Multiple dependencies use same classes and ShadowJar causes a conflict
+tasks.named("shadowJar", com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar::class) {
+    mergeServiceFiles()
+}
