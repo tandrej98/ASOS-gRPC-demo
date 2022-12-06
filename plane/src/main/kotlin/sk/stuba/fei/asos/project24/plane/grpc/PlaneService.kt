@@ -1,7 +1,5 @@
 package sk.stuba.fei.asos.project24.plane.grpc
 
-import io.grpc.Status
-import io.grpc.StatusRuntimeException
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.flow
 import mu.KotlinLogging
@@ -16,29 +14,16 @@ class PlaneService(
     coroutineContext: CoroutineContext = Dispatchers.Default
 ): PlaneGrpcKt.PlaneCoroutineImplBase(coroutineContext) {
     private val log = KotlinLogging.logger {}
-    private val locationIterator = PlaneLocation.locations.iterator()
-    private var _currentLocation: Location? = null
-    private val currentLocation: Location
-        get() = _currentLocation ?: throw StatusRuntimeException(Status.INTERNAL)
 
     init {
         log.info("Starting plane service of plane ID: {}", PlaneData.id)
-        if (!locationIterator.hasNext()) throw IllegalArgumentException("Locations list is empty")
-//      A race condition between this thread and the emitting coroutine can occur
-//       but this solution is enough for this demonstration
-        Dispatchers.Default.dispatch(context) {
-            while (true) {
-                if (locationIterator.hasNext()) {
-                    _currentLocation = locationIterator.next()
-                }
-                Thread.sleep(Config.delaySeconds * 1000)
-            }
-        }
     }
 
     override fun followLocation(request: LocationRequest) = flow {
-        emit(currentLocation)
-        delay(Config.delaySeconds.seconds)
+        while (true) {
+            emit(PlaneLocation.currentLocation)
+            delay(Config.delaySeconds.seconds)
+        }
     }
 
     override suspend fun currentLocation(request: LocationRequest) = currentLocation
