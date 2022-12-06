@@ -33,7 +33,7 @@ object Planes {
             ?: throw IllegalArgumentException("Plane with id $id not registered")
     }
 
-    suspend fun planeCurrentLocation(id: Long): Location {
+    fun planeCurrentLocation(id: Long): Location {
         return registeredPlanes[id]?.currentLocation()
             ?: throw IllegalArgumentException("Plane with id $id not registered")
     }

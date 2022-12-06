@@ -26,8 +26,6 @@ class PlaneService(
         }
     }
 
-    override suspend fun currentLocation(request: LocationRequest) = currentLocation
-
     override suspend fun information(request: PlaneInfoRequest): PlaneInfo {
         return PlaneInfo.newBuilder()
             .setId(PlaneData.id)
