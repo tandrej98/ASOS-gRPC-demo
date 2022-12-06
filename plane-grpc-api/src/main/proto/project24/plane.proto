@@ -6,7 +6,6 @@ option java_multiple_files = true;
 
 service Plane {
   rpc FollowLocation(LocationRequest) returns (stream Location);
-  rpc CurrentLocation(LocationRequest) returns (Location);
   rpc Information(PlaneInfoRequest) returns (PlaneInfo);
   rpc Register(RegisterRequest) returns (RegisterResponse);
 }

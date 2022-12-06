@@ -1,7 +1,9 @@
 package sk.stuba.fei.asos.project24.dispatching.grpc
 
 import io.grpc.ManagedChannelBuilder
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import sk.stuba.fei.asos.project24.plane.*
 
 class PlaneClient(
@@ -10,17 +12,19 @@ class PlaneClient(
 ) {
     private val channel = ManagedChannelBuilder.forAddress(clientAddress, clientPort).usePlaintext().build()
     private val stub = PlaneGrpcKt.PlaneCoroutineStub(channel)
-    lateinit var locationFlow: Flow<Location>
+    private lateinit var currentLocation: Location
 
     suspend fun initPlane(): Long {
-        return stub.register(RegisterRequest.getDefaultInstance())
+        return stub.register(RegisterRequest.getDefaultInstance()).id
             .also {
-                locationFlow = stub.followLocation(LocationRequest.getDefaultInstance())
-            }.id
+                CoroutineScope(Dispatchers.Default).launch {
+                    stub.followLocation(LocationRequest.getDefaultInstance()).collect{ currentLocation = it }
+                }
+            }
     }
 
-    suspend fun currentLocation(): Location {
-        return stub.currentLocation(LocationRequest.getDefaultInstance())
+    fun currentLocation(): Location {
+        return currentLocation
     }
 
     suspend fun planeInformation(): PlaneInfo {
