@@ -2,6 +2,7 @@ package sk.stuba.fei.asos.project24.plane.grpc
 
 import io.grpc.Server
 import io.grpc.ServerBuilder
+import io.grpc.protobuf.services.ProtoReflectionService
 import kotlinx.coroutines.Dispatchers
 import mu.KotlinLogging
 import sk.stuba.fei.asos.project24.plane.config.Config
@@ -12,6 +13,7 @@ class Server {
     private val server: Server = ServerBuilder
         .forPort(Config.grpcPort)
         .addService(PlaneService(Dispatchers.Default))
+        .addService(ProtoReflectionService.newInstance())
         .build()
     private val executor = Executors.newSingleThreadExecutor()
 
