@@ -55,3 +55,5 @@ services:
       - PLANE_CAPACITY=4
       - PLANE_START="Dubai"
       - PLANE_DESTINATION="Abu Dhabi"
+    ports:
+      - "8081:8080" 
