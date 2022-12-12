@@ -4,7 +4,6 @@ import io.grpc.Server
 import io.grpc.ServerBuilder
 import kotlinx.coroutines.Dispatchers
 import mu.KotlinLogging
-import sk.stuba.fei.asos.project24.plane.Location
 import sk.stuba.fei.asos.project24.plane.config.Config
 import java.util.concurrent.Executors
 
