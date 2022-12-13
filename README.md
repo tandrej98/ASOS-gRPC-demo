@@ -1,5 +1,9 @@
 # ASOS-gRPC-demo
-A project demonstrating gRPC streaming for the ASOS course. 
+A project demonstrating gRPC streaming for the ASOS course.
+
+[Documentation](./documentation/documentation.pdf)
+
+[Presentation](./documentation/presentation.pdf)
 
 # Using Gradle
 Building the project
